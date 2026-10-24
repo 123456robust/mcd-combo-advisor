@@ -1,0 +1,15 @@
+{
+  "$comment": "脱敏示例配置。此处只允许环境变量占位符，切勿填入真实 MCP Token。实际用法：设置环境变量 MCD_MCP_TOKEN 后由程序注入 Authorization 头。",
+  "mcpServers": {
+    "mcd-mcp": {
+      "type": "streamablehttp",
+      "url": "https://mcp.mcd.cn",
+      "headers": {
+        "Authorization": "Bearer ${MCD_MCP_TOKEN}"
+      }
+    }
+  },
+  "envExample": {
+    "MCD_MCP_TOKEN": "在 https://mcp.mcd.cn 控制台激活后获取的 Token，请勿提交到任何仓库"
+  }
+}

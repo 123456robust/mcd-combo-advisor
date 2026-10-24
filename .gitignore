@@ -1,0 +1,21 @@
+# 凭据与本地环境
+.env
+.env.*
+*.token
+token.txt
+secrets.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 编辑器与系统
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# 运行产物（含真实业务数据时不要提交）
+examples/raw-*.json
