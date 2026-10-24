@@ -1,49 +1,58 @@
-# 麦麦加班套餐助手
+<div align="center">
 
-一个命令行小工具。你告诉它"我在哪、几点、预算多少"，它调麦当劳的公开 MCP 接口，告诉你**此刻这家店真能点到什么、多少钱、多少卡**。
+# 🍔 麦麦加班套餐助手
+
+**加班到十点，附近还能吃什么？告诉它你在哪、几点、预算多少，它查麦当劳真实接口，告诉你此刻这家店真能点到什么、多少钱、多少卡。**
+
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![MCP](https://img.shields.io/badge/McDonald's%20MCP-7%20tools%20chained-FFC72C)](https://mcp.mcd.cn)
+[![Dependencies](https://img.shields.io/badge/dependencies-0%20(stdlib%20only)-4CAF50)](./src)
+[![Contest](https://img.shields.io/badge/McDonald's-Dev%20Innovation%20Challenge-D62327)](https://github.com/M-China-Official/mcd-developer-innovation-challenge)
+
+</div>
 
 ---
 
-## 我为什么要写这个
+## ✨ 功能亮点
 
-前阵子有天晚上改东西改到快十一点，出园区的时候才想起来没吃晚饭。打开点餐 app 翻了两分钟，发现一个问题：它把全天菜单一股脑铺给我，但我根本不知道**这个点**还能不能点、哪些还在售。
+| | |
+|---|---|
+| 🕐 **按「此刻」推荐** | 先用 `now-time-info` 取服务器时间判时段，再读门店返回的**真实供餐时段**（宵夜 / 早餐 / 午餐 / 下午茶 / 夜市），不是按钟点猜 |
+| 🏪 **只推真能点到的** | 查附近门店的 `businessStatus` 营业状态，再用 `query-meals` 拉**当前在售**餐品——已打烊的和售罄的不会出现 |
+| 💰 **实付价，不是标价** | 价格走 `calculate-price` 真实计价（接口返回"分"，已换算为元） |
+| 🔥 **热量可估算** | 用 `list-nutrition-foods` 的 160 条真实营养数据，按套餐默认组合求和 |
+| 🎯 **给三个互斥方案** | 最省心 / 最省钱 / 最轻负担，自己挑，不替你做"最优解" |
+| 🛡️ **不编数据** | 接口没返回的字段就明说"以官方渠道为准"；某个调用失败就跳过并标注，整条链不断 |
 
-最后我随便点了个堡，吃完有点后悔——不是不好吃，是那个点不该吃这么多。
+## 📦 安装
 
-所以这东西要解决的不是"麦当劳有什么"（这个问题 app 已经答得很好了），而是"**我这种情况该点哪个**"。区别在三个词：此刻、这家店、我现在的状态。
-
-## 它给出的是三个方案，不是一个答案
-
-我不太信"最优解"这种说法。同样一个深夜，有人刚健身完就想吃点蛋白，有人饿了一晚上想吃饱，有人只是嘴馋。所以每次跑完它给三个互斥的选项，自己挑：
-
-| | 逻辑 | 适合谁 |
-|---|---|---|
-| 最省心 | 综合分最高 | 不想纠结 |
-| 最省钱 | 实付最低 | 月底 |
-| 最轻负担 | 热量最低 | 明天要体检 / 单纯不想长肉 |
-
-时段会改变推荐结果。比如深夜档，热量超过 650 kcal 的会被往下压，含咖啡因或碳酸的会被标"这个点不太友好"——这条规则来自我自己的教训，不是什么营养学结论。
-
-## 装一下
-
-先去 [mcp.mcd.cn](https://mcp.mcd.cn) 登录手机号，右上角进控制台点激活，会给你一串 Token。
+前置：去 [mcp.mcd.cn](https://mcp.mcd.cn) 用手机号登录 → 右上角进控制台 → 点激活 → 复制 Token。
 
 ```bash
 git clone https://github.com/123456robust/mcd-combo-advisor.git
 cd mcd-combo-advisor
 
-# 没有第三方依赖，标准库写的，Python 3.9 以上直接跑
-export MCD_MCP_TOKEN='你的Token'     # Windows PowerShell: $env:MCD_MCP_TOKEN='你的Token'
-python main.py --dump-tools          # 先把接口真实字段打出来看看
+# 零第三方依赖，纯标准库，Python 3.9+ 直接跑
+export MCD_MCP_TOKEN='你的Token'          # PowerShell: $env:MCD_MCP_TOKEN='你的Token'
+python main.py --dump-tools               # 先把接口真实字段打出来看看
 ```
 
-## 跑一下
+## 🚀 用法
 
 ```bash
 python main.py --city "上海" --keyword "人民广场" --budget 40
 ```
 
-这是 10 月 25 号凌晨零点四十五分的真实输出，不是我编的样例：
+| 参数 | 说明 | 默认 |
+|---|---|---|
+| `--city` | 城市名 | 上海 |
+| `--keyword` | 地标 / 商圈关键词 | 人民广场 |
+| `--budget` | 预算（元） | 不限 |
+| `--people` | 人数 | 1 |
+| `--save-raw` | 把原始返回存成 JSON | — |
+| `--dump-tools` | 打印全部 33 个工具的真实 schema | — |
+
+### 真实输出（2026-10-25 00:45 实测，非样例）
 
 ```
 ==========================================================
@@ -83,37 +92,52 @@ MCP 调用轨迹
   ...（共 21 次真实调用，0 失败）
 ```
 
-价格是 `calculate-price` 算出来的实付价（接口给的是"分"，我除了 100）；热量是把套餐默认组合里的单品在营养表里查出来加起来的；"宵夜"这个供餐时段是门店配置里直接返回的，不是我按钟点猜的。
+## 🔗 MCP 工具链
 
-## 过程中踩到的坑（这部分我觉得比代码有意思）
+```
+now-time-info → query-nearby-stores → query-meals → query-meal-detail
+                                          ↓
+                        list-nutrition-foods → query-store-coupons → calculate-price
+```
 
-官方文档只给了工具名和一句描述，**没给入参**。我第一次调就错了两处：
+| 工具 | 拿什么 |
+|---|---|
+| `now-time-info` | 服务器当前时间 → 判时段 |
+| `query-nearby-stores` | 附近门店 + 营业状态 + **供餐时段配置** |
+| `query-meals` | 该门店此刻在售餐品（只返回编码） |
+| `query-meal-detail` | 编码 → 名称 + 套餐默认组合 |
+| `list-nutrition-foods` | 160 条真实营养数据 |
+| `query-store-coupons` | 门店可用券 |
+| `calculate-price` | **实付价**（单位：分） |
 
-1. `query-nearby-stores` 不是我以为的传个地址字符串，它要 `city` + `keyword`，还要 `beType`（堂食/外送）和 `searchType`；
-2. 价格单位是**分**。我第一版直接输出 ¥3450，看着像在卖显卡。
+详见 [MCP_INTEGRATION.md](./MCP_INTEGRATION.md)。
 
-后来我干脆不猜了：让代码先 `tools/list` 把真实 schema 拉下来，再按 schema 名字匹配着填参数。这样字段名是 `storeCode` 还是 `store_code` 都能对上。
+## 📊 数据来源说明
 
-还有个没想到的事：拿到菜单后我以为有名字和价格，结果只有一串编码。名字要再调一次 `query-meal-detail`，价格要再调 `calculate-price`。所以你看到那 21 次调用，大部分是在"把编码换成信息"。
+| 展示内容 | 来源 | 准确度 |
+|---|---|---|
+| 门店、营业状态、供餐时段 | `query-nearby-stores` | 接口实时返回 |
+| 在售餐品 | `query-meals` | 接口实时返回 |
+| 价格 | `calculate-price` | 实付价，精确到分 |
+| 热量 | `list-nutrition-foods` | **按默认组合估算**，换配菜就不准 |
+| 时段策略阈值 | 本项目自定义 | 经验值，非营养学结论 |
 
-## 还没做好的地方
+## 🛠️ 踩到的坑
 
-说实话：
+官方文档只给了工具名和一句描述，**没给入参**。第一次调错了两处：门店查询要 `city` + `keyword` + `beType` + `searchType`（不是我以为的地址字符串）；价格单位是**分**（第一版输出 ¥3450，看着像在卖显卡）。
 
-- **热量是估算**。营养表是按单品给的，套餐我只能按默认组合求和。你换成大薯条、多加了酱，数字就不准了。
-- **优惠券没接好**。测试门店凌晨返回 0 张券，所以券的逻辑我只写了接口调用和兜底，没真跑通过打折的场景。
-- **只支持到店自取**。`beType` 的外送分支我留了参数位，但没做完。
-- **时段规则是我拍脑袋定的**。650 kcal 那个阈值没有科学依据，就是我自己的经验值。
+后来不猜了——代码先 `tools/list` 拉真实 schema，再按 schema 名字匹配填参，字段名是 `storeCode` 还是 `store_code` 都能对上。
 
-## 谁会用到它
+还有个没想到的事：菜单接口只返回一串编码，名字要再调一次 detail，价格要再调 calculate-price。那 21 次调用，大部分是在"把编码换成信息"。
 
-- 加班到非正餐时段、站在路边不知道还能点什么的人
-- 想吃夜宵但明天要体检、想看一眼热量的
-- 想看看麦当劳 MCP 那 33 个工具具体怎么串起来的开发者（看 [MCP_INTEGRATION.md](./MCP_INTEGRATION.md)）
+## ⚠️ 还没做好的地方
 
-Skill 定义见 [SKILL.md](./SKILL.md)，工具链说明见 [MCP_INTEGRATION.md](./MCP_INTEGRATION.md)。
+- 热量是估算，换成大薯条或多加酱就不准
+- 优惠券逻辑没真跑通过（测试门店凌晨返回 0 张券）
+- 只支持到店自取，外送分支留了参数位没做完
+- 650 kcal 阈值是我拍的，没有科学依据
 
-## 目录
+## 📁 目录
 
 ```
 mcd-combo-advisor/
@@ -123,17 +147,19 @@ mcd-combo-advisor/
 │   └── advisor.py              时段策略 + 评分 + 方案生成
 ├── SKILL.md                    Skill 定义
 ├── MCP_INTEGRATION.md          用了哪些 MCP 工具、怎么串的
-├── mcp-config.example.json     配置示例（已脱敏，只有环境变量占位符）
-├── CONTEST_DECLARATION.md      参赛声明（官方原件，一个字没改）
+├── mcp-config.example.json     配置示例（已脱敏，仅环境变量占位符）
+├── CONTEST_DECLARATION.md      参赛声明（官方原件，未改动）
 └── .gitignore
 ```
 
-## 几条自己定的规矩
+## 👤 谁会用到
 
-- 不编数据。营业时间、在售餐品、价格全部用接口实时返回；接口没给的字段，就说"以官方渠道为准"，不猜。
-- 不存 Token。只从环境变量读，仓库里没有任何真实凭据。
-- 出错就跳过。某个工具调不通，标注一下继续跑，不让整条链断掉。
+- 加班到非正餐时段、站在路边不知道还能点什么的人
+- 想吃夜宵但明天要体检、想看一眼热量的
+- 想看看麦当劳 MCP 那 33 个工具怎么串起来的开发者
+
+---
 
 ## 免责声明
 
-这是麦当劳程序员节创意开发大赛的参赛作品，我一个人写的，**不是麦当劳官方产品**。输出仅供参考，别拿它当营养建议；吃什么、多少钱、还有没有，都以麦当劳官方渠道的实时结果为准。
+麦当劳程序员节创意开发大赛参赛作品，个人独立开发，**非麦当劳官方产品**。输出仅供参考，不构成营养建议；餐品、价格与供应状态以麦当劳官方渠道实时结果为准。

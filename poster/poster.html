@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>麦麦加班套餐助手 · 介绍海报</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#111; display:flex; justify-content:center; }
+  .poster {
+    width:1080px; height:1440px; position:relative; overflow:hidden;
+    background:
+      radial-gradient(900px 700px at 85% 8%, rgba(255,199,44,.20), transparent 60%),
+      radial-gradient(800px 600px at 5% 95%, rgba(214,35,39,.22), transparent 62%),
+      linear-gradient(180deg,#12151c 0%,#0d1016 55%,#0a0c11 100%);
+    font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif;
+    color:#fff; padding:64px 60px;
+  }
+  .tag {
+    display:inline-block; font-size:22px; letter-spacing:2px; color:#FFC72C;
+    border:2px solid rgba(255,199,44,.55); border-radius:999px; padding:8px 22px;
+  }
+  h1 { font-size:82px; font-weight:900; margin-top:34px; letter-spacing:2px; line-height:1.1; }
+  h1 span { color:#FFC72C; }
+  .sub { margin-top:26px; font-size:32px; color:#c9d0dc; line-height:1.6; }
+  .sub b { color:#fff; }
+
+  .quote {
+    margin-top:34px; padding:24px 28px; border-left:6px solid #FFC72C;
+    background:rgba(255,255,255,.05); border-radius:0 14px 14px 0;
+    font-size:27px; color:#e6e9f0; line-height:1.65;
+  }
+
+  .term {
+    margin-top:36px; background:#05070b; border:1px solid rgba(255,255,255,.14);
+    border-radius:16px; overflow:hidden;
+  }
+  .term-bar { height:46px; background:#1b2029; display:flex; align-items:center; padding:0 20px; gap:10px; }
+  .dot { width:13px; height:13px; border-radius:50%; }
+  .term-bar span { margin-left:14px; font-size:20px; color:#8d97a8; font-family:Consolas,monospace; }
+  .term-body { padding:22px 26px; font-family:Consolas,"Microsoft YaHei",monospace; font-size:22px; line-height:1.75; color:#b9c2d0; }
+  .term-body .k { color:#FFC72C; }
+  .term-body .g { color:#4ade80; }
+  .term-body .w { color:#f8fafc; font-weight:700; }
+
+  .plans { margin-top:38px; display:flex; gap:20px; }
+  .plan {
+    flex:1; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+    border-radius:18px; padding:24px 20px; text-align:center;
+  }
+  .plan .label { font-size:22px; color:#9aa4b5; }
+  .plan .name { margin-top:12px; font-size:30px; font-weight:800; }
+  .plan .price { margin-top:14px; font-size:44px; font-weight:900; color:#FFC72C; }
+  .plan .kcal { margin-top:6px; font-size:23px; color:#c9d0dc; }
+  .plan:nth-child(2) .price { color:#4ade80; }
+  .plan:nth-child(3) .price { color:#60a5fa; }
+
+  .chain { margin-top:38px; display:flex; flex-wrap:wrap; gap:12px; }
+  .chip {
+    font-family:Consolas,monospace; font-size:21px; color:#ffd76a;
+    background:rgba(255,199,44,.10); border:1px solid rgba(255,199,44,.35);
+    border-radius:10px; padding:9px 16px;
+  }
+  .chain-title { width:100%; font-size:22px; color:#8d97a8; margin-bottom:2px; }
+
+  .facts { margin-top:34px; display:flex; gap:18px; }
+  .fact { flex:1; background:rgba(74,222,128,.08); border:1px solid rgba(74,222,128,.28); border-radius:14px; padding:18px 20px; }
+  .fact .n { font-size:40px; font-weight:900; color:#4ade80; }
+  .fact .t { margin-top:4px; font-size:21px; color:#cbd3e0; }
+
+  .foot {
+    position:absolute; left:60px; right:60px; bottom:56px;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    border-top:1px solid rgba(255,255,255,.14); padding-top:24px;
+  }
+  .url { font-family:Consolas,monospace; font-size:26px; color:#FFC72C; font-weight:700; }
+  .dis { margin-top:10px; font-size:19px; color:#7d879b; line-height:1.5; }
+  .qrbox { text-align:center; }
+  .qrbox .fake {
+    width:132px; height:132px; border-radius:12px; background:#fff; padding:6px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .qrbox .fake img { width:120px; height:120px; display:block; }
+  .qrbox .cap { margin-top:8px; font-size:18px; color:#8d97a8; }
+</style>
+</head>
+<body>
+<div class="poster">
+  <div class="tag">麦当劳程序员节 · 创意开发大赛 参赛作品</div>
+
+  <h1>麦麦<span>加班</span>套餐助手</h1>
+
+  <div class="sub">告诉它你在哪、几点、预算多少，<br>它查麦当劳真实接口，告诉你<b>此刻这家店真能点到什么</b>。</div>
+
+  <div class="quote">「有天加班到快十一点才想起来没吃晚饭，打开点餐 app 发现它把全天菜单都铺给我 —— 但我根本不知道这个点还能点什么。」</div>
+
+  <div class="term">
+    <div class="term-bar">
+      <div class="dot" style="background:#ff5f57"></div>
+      <div class="dot" style="background:#febc2e"></div>
+      <div class="dot" style="background:#28c840"></div>
+      <span>python main.py --city "上海" --keyword "人民广场" --budget 40</span>
+    </div>
+    <div class="term-body">
+      当前 <span class="w">00:45</span> · 深夜时段 &nbsp;|&nbsp; 门店供餐时段：<span class="k">宵夜</span><br>
+      命中门店 <span class="w">5</span> 家 · 在售餐品 <span class="w">87</span> 项<br>
+      <span class="g">[OK]</span> now-time-info &nbsp; <span class="g">[OK]</span> query-nearby-stores
+      <span class="g">[OK]</span> query-meals<br>
+      <span class="g">[OK]</span> query-meal-detail &nbsp; <span class="g">[OK]</span> calculate-price
+      &nbsp;…共 <span class="w">21</span> 次真实调用，<span class="w">0</span> 失败
+    </div>
+  </div>
+
+  <div class="plans">
+    <div class="plan">
+      <div class="label">最省心</div>
+      <div class="name">蘸酱炸鸡</div>
+      <div class="price">¥11.9</div>
+      <div class="kcal">328 kcal</div>
+    </div>
+    <div class="plan">
+      <div class="label">最省钱</div>
+      <div class="name">龙焰鸡腿堡三件套</div>
+      <div class="price">¥26.9</div>
+      <div class="kcal">436 kcal</div>
+    </div>
+    <div class="plan">
+      <div class="label">最轻负担</div>
+      <div class="name">龙焰芝士棒三件套</div>
+      <div class="price">¥29.9</div>
+      <div class="kcal">436 kcal</div>
+    </div>
+  </div>
+
+  <div class="chain">
+    <div class="chain-title">7 个麦当劳 MCP 工具串成一条链</div>
+    <div class="chip">now-time-info</div>
+    <div class="chip">query-nearby-stores</div>
+    <div class="chip">query-meals</div>
+    <div class="chip">query-meal-detail</div>
+    <div class="chip">list-nutrition-foods</div>
+    <div class="chip">query-store-coupons</div>
+    <div class="chip">calculate-price</div>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><div class="n">0</div><div class="t">第三方依赖（纯标准库）</div></div>
+    <div class="fact"><div class="n">21</div><div class="t">真实 MCP 调用</div></div>
+    <div class="fact"><div class="n">100%</div><div class="t">价格与菜单来自实时接口</div></div>
+  </div>
+
+  <div class="foot">
+    <div>
+      <div class="url">github.com/123456robust/mcd-combo-advisor</div>
+      <div class="dis">个人独立开发，非麦当劳官方产品 · 输出仅供参考<br>餐品、价格与供应状态以麦当劳官方渠道实时结果为准</div>
+    </div>
+    <div class="qrbox">
+      <div class="fake">
+        <img src="qr.png" alt="仓库地址二维码">
+      </div>
+      <div class="cap">扫码看源码</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
